@@ -1,6 +1,7 @@
 .venv/
 
 *.csv
+*.zip
 
 
 ny_taxi_postgres_data/
