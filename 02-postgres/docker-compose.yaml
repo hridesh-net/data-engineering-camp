@@ -7,7 +7,7 @@ services:
       - POSTGRES_PASSWORD=root
       - POSTGRES_DB=ny_taxi
     volumes:
-      - d:/Learning/data_engineering/data-engineering-camp/02-postgres/ny_taxi_postgres_data:/var/lib/postgresql
+      - /Users/elrosshinzo/Projects/Personal/rdm/data-engineering-camp/02-postgres/ny_taxi_postgres_data:/var/lib/postgresql
     ports:
       - "5432:5432"
   pgadmin:
@@ -18,3 +18,24 @@ services:
     ports:
       - "8085:80"
     
+  ingest:
+    build: .
+    container_name: csv_ingest
+    depends_on:
+      - pgdatabase
+    volumes:
+      - ./data:/data
+    environment:
+      DB_HOST: pgdatabase
+      DB_PORT: 5432
+      DB_NAME: ny_taxi
+      DB_USER: root
+      DB_PASS: root
+    command: >
+      --input-path /data/yellow_tripdata_2015-01.csv
+      --table-name yellow_taxi_data
+      --db-host pgdatabase
+      --db-port 5432
+      --db-name ny_taxi
+      --db-user root
+      --db-pass root
