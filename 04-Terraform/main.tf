@@ -46,3 +46,16 @@ resource "aws_dynamodb_table" "terraform" {
   }
 }
 
+
+#################################
+# Task 1 creating S3 Data Lake. #
+# Level: Easy                   #
+#################################
+
+# Calling modules to execute what we have in module directory in teraform
+module "s3_data_lake" {
+  source = "./modules/S3_data_lake"
+
+  lake_bucket_name = var.lake_bucket_name
+  environment = var.environment
+}
